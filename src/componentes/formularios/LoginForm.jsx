@@ -1,7 +1,29 @@
+import api from '../../utils/axios.js'
+import { useForm } from "react-hook-form";
+
+
 export const LoginForm = () => {
+
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
+
+  const fetchData = async (data) => {
+      
+    try {
+     const response = await api.post("auth/login/",data);
+      return response.data;
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      throw error;
+    }
+  };
+  
   return (
     <>
-      <form className="w-full max-w-md space-y-6">
+      <form className="w-full max-w-md space-y-6" onSubmit={handleSubmit(fetchData)}>
         <div>
           <label
             htmlFor="email"
@@ -16,6 +38,7 @@ export const LoginForm = () => {
             required
             className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="ejemplo@correo.com"
+            {...register("email", { required: true })}
           />
         </div>
         <div>
@@ -32,6 +55,7 @@ export const LoginForm = () => {
             required
             className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="********"
+            {...register("password", { required: true })}
           />
         </div>
         <div className="flex items-center justify-between">
