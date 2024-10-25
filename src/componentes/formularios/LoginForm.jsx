@@ -1,8 +1,11 @@
 import api from '../../utils/axios.js'
 import { useForm } from "react-hook-form";
-
+import { useNavigate } from 'react-router-dom';
 
 export const LoginForm = () => {
+
+
+  const navigate = useNavigate();
 
   const {
     register,
@@ -11,10 +14,18 @@ export const LoginForm = () => {
   } = useForm();
 
   const fetchData = async (data) => {
-      
     try {
      const response = await api.post("auth/login/",data);
+     if(response){
+      const token = response.data.access;
+
+     localStorage.setItem('authToken', token);
+
+     navigate('/home')
+
       return response.data;
+     }
+     
     } catch (error) {
       console.error('Error fetching data:', error);
       throw error;
