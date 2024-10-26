@@ -9,12 +9,6 @@ export const LoginPage = () => {
           Iniciar sesión
         </h2>
 
-        <p className="text-center text-sm text-gray-600 mt-6">
-          ¿No tienes cuenta?{" "}
-          <a href="#" className="text-green-500 hover:underline">
-            Regístrate
-          </a>
-        </p>
 
         <LoginForm />
       </PlantillaInicio>
