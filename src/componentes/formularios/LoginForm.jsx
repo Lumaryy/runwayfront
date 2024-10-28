@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 export const LoginForm = () => {
   const navigate = useNavigate();
-  const [modalOpen, setModalOpen] = useState(false); // Estado para controlar el modal de registro
+  const [modalOpen, setModalOpen] = useState(false); 
 
   const {
     register,
@@ -31,10 +31,15 @@ export const LoginForm = () => {
   const handleRegisterSubmit = async (data) => {
     try {
       const registerData = {
-        ...data,
+        username: data.nombre,  
+        nombre: data.nombre,
+        email: data.regEmail,
+        telefono: data.telefono,
         tipo_usuario: 'cliente', 
+        estado: 'activo', 
+        contrasena: data.regPassword,
       };
-      const response = await api.post("auth/register/", registerData);
+      const response = await api.post("/usuarios/", registerData);
       if (response) {
         alert('¡Registro exitoso!');
         setModalOpen(false); 
@@ -43,7 +48,7 @@ export const LoginForm = () => {
       console.error('Error durante el registro:', error);
     }
   };
-
+  
   return (
     <>
       <form className="w-full max-w-md space-y-6" onSubmit={handleSubmit(fetchData)}>
@@ -104,7 +109,7 @@ export const LoginForm = () => {
         </button>
       </form>
 
-      {/* Modal de registro */}
+      {/* Registration Modal */}
       {modalOpen && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 shadow-lg">
@@ -155,7 +160,7 @@ export const LoginForm = () => {
                   id="tipo_usuario"
                   name="tipo_usuario"
                   type="text"
-                  value="Cliente" 
+                  value="cliente" 
                   readOnly 
                   className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md bg-gray-200"
                 />
