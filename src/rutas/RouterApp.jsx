@@ -4,6 +4,10 @@ import { Suspense } from "react";
 // paginas
 import { LoginPage } from "../paginas/loginPage";
 import { HomePage } from "../paginas/HomePage";
+import { GestionPedidosPage } from "../paginas/GestionPedidosPage";
+import { SolicitarPedidos } from "../paginas/SolicitarPedidos";
+import { RepoteNovedades } from "../paginas/ReporteNovedades";
+import { ReportarIncidencias } from "../paginas/ReportarIncidencias";
 
 export const RouterApp = () => {
   return (
@@ -12,6 +16,10 @@ export const RouterApp = () => {
         <Routes>
           <Route path="/" element={<LoginPage />} />
           <Route path="/home" element={<HomePage />} />
+          <Route path="/gestionpedidos" element={<GestionPedidosPage />} />
+          <Route path="/solicitarpedidos" element={<SolicitarPedidos />} />
+          <Route path="/reportarnovedad" element={<RepoteNovedades />} />
+          <Route path="/reportarincidencia" element={<ReportarIncidencias />} />
         </Routes>
       </Suspense>
     </>

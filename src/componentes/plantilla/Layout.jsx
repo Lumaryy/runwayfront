@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import { Header } from "../subcomponentes/Header";
 import { Outlet } from "react-router-dom";
+import { SideBar } from "../subcomponentes/SideBar";
 
 export const Layout = ({ children }) => {
   return (
@@ -10,10 +11,7 @@ export const Layout = ({ children }) => {
 
         <main className="flex flex-grow overflow-hidden">
           <aside className="hidden lg:block ">
-            {/*  <SideBar
-              rol={usuarioRol.trim().toLowerCase().startsWith("administrador")}
-            /> */}
-            aqui va el menu o el sidebar
+            <SideBar />
           </aside>
 
           <section className="flex-grow p-2 lg:p-8 overflow-auto">

@@ -1,13 +1,10 @@
 import { Layout } from "../componentes/plantilla/Layout";
-import { Input } from "@nextui-org/react";
 
-export const HomePage = () => {
+export const RepoteNovedades = () => {
   return (
     <>
       <Layout>
-        <div>
-          <Input />
-        </div>
+        Luisa, qui debe de ir un formulario para reportar Novedades
       </Layout>
     </>
   );
