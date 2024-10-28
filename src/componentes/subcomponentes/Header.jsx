@@ -1,3 +1,5 @@
+import cajita from '../../assets/cajita.png'
+
 export const Header = ({ contenido }) => {
   return (
     <>
@@ -7,20 +9,18 @@ export const Header = ({ contenido }) => {
           aria-label="Global"
         >
           <div className="flex items-center h-full lg:flex-1 ">
-            <figure className="h-16v w-16  flex justify-center items-center">
-              {/* <LazyLoadImage
-                src={v.logoTic}
+            <figure className="h-16 w-16 flex justify-center items-center">
+              <img
+                src={cajita}
                 className="h-full w-full object-contain cursor-pointer"
-                effect="opacity"
                 alt="logo-sena"
-              /> */}{" "}
-              La imagen debe ir aqui Luisa
+              />
             </figure>
             <div className="ml-3 text-lg font-semibold text-gray-700">
-              MachinApp
+              Runway Domicilios
             </div>
           </div>
-          <div className="flex items-center">{contenido}</div>
+          <div className="flex items-center">"Servicio rápido, satisfacción al instante"</div>
         </nav>
       </header>
     </>

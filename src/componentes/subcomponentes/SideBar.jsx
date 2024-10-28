@@ -70,10 +70,10 @@ export const SideBar = () => {
         <div className="p-6 border-b border-gray-200 dark:border-gray-800">
           <div className="flex items-center space-x-3">
             <div className="h-8 w-8 rounded-lg bg-blue-600 flex items-center justify-center">
-              <span className="text-white font-bold text-xl">M</span>
+              <span className="text-white font-bold text-xl">R</span>
             </div>
             <span className="text-lg font-semibold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-              Mi Aplicación
+              Runway Domicilios
             </span>
           </div>
         </div>

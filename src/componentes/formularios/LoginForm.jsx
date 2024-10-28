@@ -7,11 +7,8 @@ export const LoginForm = () => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false); 
 
-  const {
-    register,
-    formState: { errors },
-    handleSubmit,
-  } = useForm();
+  const { register: registerLogin, formState: { errors: loginErrors }, handleSubmit: handleLoginSubmit } = useForm();
+  const { register: registerRegister, formState: { errors: registerErrors }, handleSubmit: handleRegisterFormSubmit } = useForm();
 
   const fetchData = async (data) => {
     try {
@@ -51,7 +48,8 @@ export const LoginForm = () => {
   
   return (
     <>
-      <form className="w-full max-w-md space-y-6" onSubmit={handleSubmit(fetchData)}>
+      {/* Login Form */}
+      <form className="w-full max-w-md space-y-6" onSubmit={handleLoginSubmit(fetchData)}>
         <p className="text-center text-sm text-gray-600 mb-4">
           ¿No tienes cuenta?{" "}
           <a 
@@ -72,9 +70,9 @@ export const LoginForm = () => {
             required
             className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="ejemplo@correo.com"
-            {...register("email", { required: true })}
+            {...registerLogin("email", { required: true })}
           />
-          {errors.email && <span className="text-red-500">Este campo es obligatorio</span>}
+          {loginErrors.email && <span className="text-red-500">Este campo es obligatorio</span>}
         </div>
         <div>
           <label htmlFor="password" className="block text-sm font-medium text-gray-600">Contraseña</label>
@@ -85,26 +83,11 @@ export const LoginForm = () => {
             required
             className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
             placeholder="********"
-            {...register("password", { required: true })}
+            {...registerLogin("password", { required: true })}
           />
-          {errors.password && <span className="text-red-500">Este campo es obligatorio</span>}
+          {loginErrors.password && <span className="text-red-500">Este campo es obligatorio</span>}
         </div>
-        <div className="flex items-center justify-between">
-          <div className="flex items-center">
-            <input
-              id="remember"
-              name="remember"
-              type="checkbox"
-              className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
-            />
-            <label htmlFor="remember" className="ml-2 text-sm text-gray-600">Recuérdame</label>
-          </div>
-          <a href="#" className="text-sm text-green-500 hover:underline">¿Olvidaste tu contraseña?</a>
-        </div>
-        <button
-          type="submit"
-          className="w-full py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-        >
+        <button type="submit" className="w-full py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400">
           Iniciar sesión
         </button>
       </form>
@@ -114,7 +97,7 @@ export const LoginForm = () => {
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-6 shadow-lg">
             <h2 className="text-lg font-semibold">Registro</h2>
-            <form className="space-y-4" onSubmit={handleSubmit(handleRegisterSubmit)}>
+            <form className="space-y-4" onSubmit={handleRegisterFormSubmit(handleRegisterSubmit)}>
               <div>
                 <label htmlFor="nombre" className="block text-sm font-medium text-gray-600">Nombre</label>
                 <input
@@ -124,9 +107,9 @@ export const LoginForm = () => {
                   required
                   className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   placeholder="Tu nombre completo"
-                  {...register("nombre", { required: true })}
+                  {...registerRegister("nombre", { required: true })}
                 />
-                {errors.nombre && <span className="text-red-500">Este campo es obligatorio</span>}
+                {registerErrors.nombre && <span className="text-red-500">Este campo es obligatorio</span>}
               </div>
               <div>
                 <label htmlFor="regEmail" className="block text-sm font-medium text-gray-600">Correo electrónico</label>
@@ -137,9 +120,9 @@ export const LoginForm = () => {
                   required
                   className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   placeholder="ejemplo@correo.com"
-                  {...register("regEmail", { required: true })}
+                  {...registerRegister("regEmail", { required: true })}
                 />
-                {errors.regEmail && <span className="text-red-500">Este campo es obligatorio</span>}
+                {registerErrors.regEmail && <span className="text-red-500">Este campo es obligatorio</span>}
               </div>
               <div>
                 <label htmlFor="telefono" className="block text-sm font-medium text-gray-600">Teléfono</label>
@@ -150,20 +133,9 @@ export const LoginForm = () => {
                   required
                   className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   placeholder="Número de teléfono"
-                  {...register("telefono", { required: true })}
+                  {...registerRegister("telefono", { required: true })}
                 />
-                {errors.telefono && <span className="text-red-500">Este campo es obligatorio</span>}
-              </div>
-              <div>
-                <label htmlFor="tipo_usuario" className="block text-sm font-medium text-gray-600">Tipo de Usuario</label>
-                <input
-                  id="tipo_usuario"
-                  name="tipo_usuario"
-                  type="text"
-                  value="cliente" 
-                  readOnly 
-                  className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md bg-gray-200"
-                />
+                {registerErrors.telefono && <span className="text-red-500">Este campo es obligatorio</span>}
               </div>
               <div>
                 <label htmlFor="regPassword" className="block text-sm font-medium text-gray-600">Contraseña</label>
@@ -174,21 +146,14 @@ export const LoginForm = () => {
                   required
                   className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                   placeholder="********"
-                  {...register("regPassword", { required: true })}
+                  {...registerRegister("regPassword", { required: true })}
                 />
-                {errors.regPassword && <span className="text-red-500">Este campo es obligatorio</span>}
+                {registerErrors.regPassword && <span className="text-red-500">Este campo es obligatorio</span>}
               </div>
-              <button
-                type="submit"
-                className="w-full py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400"
-              >
+              <button type="submit" className="w-full py-2 text-white bg-green-500 rounded-md hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-400">
                 Registrarse
               </button>
-              <button
-                type="button"
-                className="w-full py-2 text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
-                onClick={() => setModalOpen(false)} 
-              >
+              <button type="button" className="w-full py-2 text-gray-500 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400" onClick={() => setModalOpen(false)}>
                 Cancelar
               </button>
             </form>
@@ -198,3 +163,4 @@ export const LoginForm = () => {
     </>
   );
 };
+  
