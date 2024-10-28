@@ -7,7 +7,7 @@ export const Layout = ({ children }) => {
   return (
     <>
       <div className="min-h-screen flex flex-col bg-gray-100 overflow-hidden">
-        <Header contenido={"aqui va algun contenido"} />
+        <Header contenido={"servicio rapido, satisfaccion al instante"} />
 
         <main className="flex flex-grow overflow-hidden">
           <aside className="hidden lg:block ">

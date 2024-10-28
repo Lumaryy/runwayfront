@@ -20,7 +20,7 @@ export const Header = ({ contenido }) => {
               Runway Domicilios
             </div>
           </div>
-          <div className="flex items-center">"Servicio rápido, satisfacción al instante"</div>
+          <div className="flex items-center">{ contenido }</div>
         </nav>
       </header>
     </>
