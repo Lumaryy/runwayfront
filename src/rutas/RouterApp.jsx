@@ -9,6 +9,7 @@ import { RegistroPedido } from "../paginas/SolicitarPedidos";
 import { RepoteNovedades } from "../paginas/ReporteNovedades";
 import { ReportarIncidencias } from "../paginas/ReportarIncidencias";
 import {ControlUsuarios} from "../paginas/ControlUsuarios"
+import {ControlDomiciliarios} from "../paginas/ControlDomiciliarios"
 
 export const RouterApp = () => {
   return (
@@ -22,6 +23,7 @@ export const RouterApp = () => {
           <Route path="/reportarnovedad" element={<RepoteNovedades />} />
           <Route path="/reportarincidencia" element={<ReportarIncidencias />} />
           <Route path="/usuarios" element={<ControlUsuarios />} />
+          <Route path="/Domiciliarios" element={<ControlDomiciliarios />} />
         </Routes>
       </Suspense>
     </>

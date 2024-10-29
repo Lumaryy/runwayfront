@@ -51,7 +51,7 @@ export const SideBar = () => {
       icon: CogIcon,
       submenu: [
         { title: "Usuarios", path: "/usuarios" },
-        { title: "Domiciliarios", path: "/settings/security" },
+        { title: "Domiciliarios", path: "/Domiciliarios" },
       ],
     },
   ];

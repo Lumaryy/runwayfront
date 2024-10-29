@@ -21,31 +21,28 @@ const style = {
   p: 4,
 };
 
-export const ControlUsuarios = () => {
+export const ControlDomiciliarios = () => {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [id, setId] = useState('');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  const [role, setRole] = useState('');
-  const [password, setPassword] = useState(''); // Nuevo estado para la contraseña
+  const [userId, setUserId] = useState('');
+  const [license, setLicense] = useState('');
+  const [availability, setAvailability] = useState('disponible');
   const [errors, setErrors] = useState({});
   const [formState, setFormState] = useState(false);
+  const [users, setUsers] = useState([]); 
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
     setOpen(false);
-    resetForm(); // Reinicia el formulario al cerrar
+    resetForm();
   };
 
   const resetForm = () => {
     setId('');
-    setName('');
-    setEmail('');
-    setPhone('');
-    setRole('');
-    setPassword('');
+    setUserId('');
+    setLicense('');
+    setAvailability('disponible');
     setErrors({});
     setFormState(false);
   };
@@ -53,24 +50,21 @@ export const ControlUsuarios = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    // Datos a enviar
     const dataSend = {
-      nombre: name,
-      email: email,
-      telefono: phone,
-      tipo_usuario: role,
-      ...(formState === false && { password: password }) // Incluye contraseña solo en registro
+      usuarios: userId,
+      licencia_vehiculo: license,
+      disponibilidad: availability,
     };
 
     try {
       let save;
-      if (!formState) { // Registro
-        save = await api.post('usuarios/', dataSend);
-      } else { // Edición
-        save = await api.put(`usuarios/${id}/`, dataSend);
+      if (!formState) { 
+        save = await api.post('domiciliarios/', dataSend);
+      } else { 
+        save = await api.put(`domiciliarios/${id}/`, dataSend);
       }
 
-      console.log('USER SAVE: ', save);
+      console.log('DOMICILIARIO SAVE: ', save);
       await fetchData();
       handleClose();
 
@@ -98,40 +92,29 @@ export const ControlUsuarios = () => {
     }
   };
 
-  const handleEdit = (user) => {
-    setId(user.id);
-    setName(user.nombre);
-    setEmail(user.email);
-    setPhone(user.telefono);
-    setRole(user.tipo_usuario);
-    setFormState(true); // Cambiar a modo edición
+  const handleEdit = (domiciliario) => {
+    setId(domiciliario.id);
+    setUserId(domiciliario.usuarios.id); 
+    setLicense(domiciliario.licencia_vehiculo);
+    setAvailability(domiciliario.disponibilidad);
+    setFormState(true); 
     handleOpen();
-  };
-
-  const changeStatus = async (id, currentStatus) => {
-    const newStatus = currentStatus === "Activo" ? "Inactivo" : "Activo";
-    
-    try {
-      await api.patch(`usuarios/${id}/`, { estado: newStatus });
-      await fetchData();
-      Swal.fire({
-        title: "Estado actualizado!",
-        icon: "success",
-      });
-    } catch (error) {
-      console.error('Error al cambiar el estado:', error.response?.data || error.message);
-      Swal.fire({
-        title: "Error al cambiar el estado!",
-        icon: "error",
-      });
-    }
   };
 
   const fetchData = async () => {
     try {
-      const response = await api.get('usuarios/');
+      const response = await api.get('domiciliarios/');
       setData(response.data);
-      console.log('LIST USERS: ', response.data);
+      console.log('LIST DOMICILIARIOS: ', response.data);
+    } catch (error) {
+      console.error('Error al obtener los domiciliarios:', error);
+    }
+  };
+
+  const fetchUsers = async () => {
+    try {
+      const response = await api.get('usuarios/');
+      setUsers(response.data);
     } catch (error) {
       console.error('Error al obtener los usuarios:', error);
     }
@@ -139,6 +122,7 @@ export const ControlUsuarios = () => {
 
   useEffect(() => {
     fetchData();
+    fetchUsers(); 
   }, []);
 
   const columns = [
@@ -148,18 +132,18 @@ export const ControlUsuarios = () => {
       sortable: true,
     },
     {
-      name: 'Nombre',
-      selector: row => row.nombre,
+      name: 'Nombre Usuario',
+      selector: row => row.usuarios ? row.usuarios.nombre : 'Sin usuario',
       sortable: true,
     },
     {
-      name: 'Email',
-      selector: row => row.email,
+      name: 'Licencia de Vehículo',
+      selector: row => row.licencia_vehiculo,
       sortable: true,
     },
     {
-      name: 'Teléfono',
-      selector: row => row.telefono,
+      name: 'Disponibilidad',
+      selector: row => row.disponibilidad,
       sortable: true,
     },
     {
@@ -175,14 +159,6 @@ export const ControlUsuarios = () => {
           >
             Editar
           </Button>
-          <Button
-            onClick={() => changeStatus(row.id, row.estado)}
-            variant="contained"
-            color={row.estado === "Activo" ? "error" : "success"}
-            size="small"
-          >
-            {row.estado}
-          </Button>
         </div>
       ),
       sortable: false,
@@ -192,11 +168,11 @@ export const ControlUsuarios = () => {
   return (
     <Layout>
       <Button onClick={handleOpen} variant="contained" color="primary" sx={{ mb: 2 }}>
-        Registrar
+        Registrar Domiciliario
       </Button>
 
       <DataTable
-        title="Listado de Usuarios"
+        title="Listado de Domiciliarios"
         columns={columns}
         data={data}
         pagination
@@ -213,7 +189,7 @@ export const ControlUsuarios = () => {
       >
         <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
-            {formState ? "Editar Información" : "Registrar Usuario"}
+            {formState ? "Editar Información de Domiciliario" : "Registrar Domiciliario"}
           </Typography>
           <form onSubmit={handleSubmit}>
             {errors.general && (
@@ -222,64 +198,45 @@ export const ControlUsuarios = () => {
               </Typography>
             )}
             <TextField
-              label="Nombre"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              error={Boolean(errors.nombre)}
-              helperText={errors.nombre}
-            />
-            <TextField
-              label="Email"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              error={Boolean(errors.email)}
-              helperText={errors.email}
-            />
-            <TextField
-              label="Teléfono"
-              variant="outlined"
-              fullWidth
-              margin="normal"
-              value={phone}
-              onChange={(e) => setPhone(e.target.value)}
-              error={Boolean(errors.telefono)}
-              helperText={errors.telefono}
-            />
-            <TextField
-              label="Rol"
+              label="Usuario"
               select
               fullWidth
               margin="normal"
-              value={role}
-              onChange={(e) => setRole(e.target.value)}
-              error={Boolean(errors.tipo_usuario)}
-              helperText={errors.tipo_usuario}
+              value={userId}
+              onChange={(e) => setUserId(e.target.value)}
+              error={Boolean(errors.usuarios)}
+              helperText={errors.usuarios}
             >
-              <MenuItem value="admin">Administrador</MenuItem>
-              <MenuItem value="cliente">Cliente</MenuItem>
-              <MenuItem value="negocio">Negocio</MenuItem>
-              <MenuItem value="domiciliario">Domiciliario</MenuItem>
+              {users.map(user => (
+                <MenuItem key={user.id} value={user.id}>
+                  {user.nombre}
+                </MenuItem>
+              ))}
             </TextField>
-            {!formState && (
-              <TextField
-                label="Contraseña"
-                variant="outlined"
-                fullWidth
-                margin="normal"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                error={Boolean(errors.password)}
-                helperText={errors.password}
-              />
-            )}
+            <TextField
+              label="Licencia de Vehículo"
+              variant="outlined"
+              fullWidth
+              margin="normal"
+              value={license}
+              onChange={(e) => setLicense(e.target.value)}
+              error={Boolean(errors.licencia_vehiculo)}
+              helperText={errors.licencia_vehiculo}
+            />
+            <TextField
+              label="Disponibilidad"
+              select
+              fullWidth
+              margin="normal"
+              value={availability}
+              onChange={(e) => setAvailability(e.target.value)}
+              error={Boolean(errors.disponibilidad)}
+              helperText={errors.disponibilidad}
+            >
+              <MenuItem value="disponible">Disponible</MenuItem>
+              <MenuItem value="ocupado">Ocupado</MenuItem>
+              <MenuItem value="no_disponible">No Disponible</MenuItem>
+            </TextField>
             <Button type="submit" variant="contained" color="primary" sx={{ mt: 2 }}>
               {formState ? "Actualizar" : "Registrar"}
             </Button>
