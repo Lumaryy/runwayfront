@@ -13,7 +13,7 @@ export const Layout = ({ children }) => {
   return (
     <>
       <div className="min-h-screen flex flex-col bg-gray-100 overflow-hidden">
-        <Header contenido={authData.first_name} />
+        <Header contenido={authData ? authData.nombre : '404 Not Found!'} />
 
         <main className="flex flex-grow overflow-hidden">
           <aside className="hidden lg:block ">
