@@ -11,19 +11,24 @@ const usePedidosMetrics = () => {
   const [error, setError] = useState(null);
 
   const fetchData = async () => {
+
     try {
       setLoading(true);
-      const response = await api.get('/solicitudes/');
+      const response = await api.get('solicitudes/');
       const pedidos = response.data;
+
 
 
       const enCurso = pedidos.filter(pedido => pedido.estado === 'EN CURSO').length;
       const completado = pedidos.filter(pedido => pedido.estado === 'COMPLETADO').length;
       const cancelado = pedidos.filter(pedido => pedido.estado === 'CANCELADO').length;
+       const pendiente = pedidos.filter(pedido => pedido.estado === 'PENDIENTE').length;
+       const asignado = pedidos.filter(pedido => pedido.estado === 'ASIGNADO').length;
 
-      setData({ enCurso, completado, cancelado });
+      setData({ enCurso, completado, cancelado, pendiente,asignado });
     } catch (err) {
       setError(err);
+      console.error(err)
     } finally {
       setLoading(false);
     }

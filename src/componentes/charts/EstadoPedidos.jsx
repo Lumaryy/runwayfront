@@ -1,7 +1,22 @@
 import ReactECharts from "echarts-for-react";
+import usePedidosMetrics from "../hooks/pedidosHook.jsx";
 
+import {useEffect} from "react";
 
 export const EstadoPedidosChart = () => {
+
+    const {data} = usePedidosMetrics();
+
+
+    const result = Object.keys(data).map(key => ({
+        name: key,
+        value: data[key],
+    }));
+
+
+    useEffect(() => {
+        console.log(data);
+    }, [data])
 
 
     const option = {
@@ -56,11 +71,7 @@ export const EstadoPedidosChart = () => {
                 labelLine: {
                     show: false,
                 },
-                data: [{value: 1048, name: 'Search Engine'},
-                    {value: 735, name: 'Direct'},
-                    {value: 580, name: 'Email'},
-                    {value: 484, name: 'Union Ads'},
-                    {value: 300, name: 'Video Ads'}],
+                data: result,
             },
         ],
     };
