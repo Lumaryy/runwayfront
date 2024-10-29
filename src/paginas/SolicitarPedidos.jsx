@@ -34,7 +34,7 @@ export const RegistroPedido = () => {
         fechaHora: new Date().toISOString(), // Fecha y hora actual
       };
 
-      const response = await api.post("/pedidos", pedidoData);
+      const response = await api.post("/solicitudes/", pedidoData);
       if (response) {
         alert("¡Pedido registrado exitosamente!");
       }

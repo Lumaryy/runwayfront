@@ -50,7 +50,7 @@ export const SideBar = () => {
       title: "Panel de control",
       icon: CogIcon,
       submenu: [
-        { title: "Usuarios", path: "/" },
+        { title: "Usuarios", path: "/usuarios" },
         { title: "Domiciliarios", path: "/settings/security" },
       ],
     },
