@@ -3,6 +3,7 @@ import { AuthContext } from "../componentes/context/AuthContext.jsx";
 import api from "../utils/axios"; 
 import { useForm } from "react-hook-form";
 import { Layout } from "../componentes/plantilla/Layout.jsx";
+import {Input} from "@nextui-org/react";
 
 const useAuth = () => useContext(AuthContext);
 
@@ -26,15 +27,15 @@ export const RegistroPedido = () => {
   const handlePedidoSubmit = async (data) => {
     try {
       const pedidoData = {
-        usuario: authData?.username, 
+        usuario: authData?.id,
         domiciliario: data.domiciliario,
-        direccionRecogida: data.direccionRecogida,
-        direccionEntrega: data.direccionEntrega,
+        direccion_recogida: data.direccionRecogida,
+        direccion_entrega: data.direccionEntrega,
         estado: "PENDIENTE", // Estado predeterminado
-        fechaHora: new Date().toISOString(), // Fecha y hora actual
+        fecha_hora: new Date().toISOString(), // Fecha y hora actual
       };
 
-      const response = await api.post("/solicitudes/", pedidoData);
+      const response = await api.post("/pedidos", pedidoData);
       if (response) {
         alert("¡Pedido registrado exitosamente!");
       }
@@ -50,13 +51,7 @@ export const RegistroPedido = () => {
           <label htmlFor="usuario" className="block text-sm font-medium text-gray-600">
             Usuario
           </label>
-          <input
-            id="usuario"
-            type="text"
-            value={authData?.username || ""}
-            readOnly
-            className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-          />
+         <Input type={"text"}  />
         </div>
 
         {/* Campo para seleccionar un domiciliario */}
@@ -72,7 +67,7 @@ export const RegistroPedido = () => {
             <option value="">Selecciona un domiciliario</option>
             {domiciliarios.map((dom) => (
               <option key={dom.id} value={dom.id}>
-                {dom.nombre}
+                {dom.id}
               </option>
             ))}
           </select>

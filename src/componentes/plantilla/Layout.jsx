@@ -2,12 +2,18 @@ import { Suspense } from "react";
 import { Header } from "../subcomponentes/Header";
 import { Outlet } from "react-router-dom";
 import { SideBar } from "../subcomponentes/SideBar";
+import {AuthContext} from "../context/AuthContext.jsx";
+import {useContext} from "react";
+
 
 export const Layout = ({ children }) => {
+
+  const { authData } = useContext(AuthContext);
+
   return (
     <>
       <div className="min-h-screen flex flex-col bg-gray-100 overflow-hidden">
-        <Header contenido={"servicio rapido, satisfaccion al instante"} />
+        <Header contenido={authData.first_name} />
 
         <main className="flex flex-grow overflow-hidden">
           <aside className="hidden lg:block ">

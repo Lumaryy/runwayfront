@@ -1,12 +1,11 @@
 import api from '../../utils/axios.js';
 import { useForm } from "react-hook-form";
 import { useNavigate } from 'react-router-dom';
-import { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext.jsx'; 
+import { useState } from 'react';
+
 
 export const LoginForm = () => {
   const navigate = useNavigate();
-  const { iniciarSesion } = useContext(AuthContext);
   const [modalOpen, setModalOpen] = useState(false);
   const [loading, setLoading] = useState(false); 
   const [loginError, setLoginError] = useState('');
@@ -22,7 +21,7 @@ export const LoginForm = () => {
       if (response) {
         const token = response.data.access;
         localStorage.setItem('authToken', token);
-        iniciarSesion(response.data); 
+        //iniciarSesion(response.data);
         navigate('/home');
       }
     } catch (error) {
