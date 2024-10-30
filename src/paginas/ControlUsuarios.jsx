@@ -109,7 +109,7 @@ export const ControlUsuarios = () => {
   };
 
   const changeStatus = async (id, currentStatus) => {
-    const newStatus = currentStatus === "Activo" ? "Inactivo" : "Activo";
+    const newStatus = currentStatus === "inactivo" ?  "activo": "inactivo";
     
     try {
       await api.patch(`usuarios/${id}/`, { estado: newStatus });
