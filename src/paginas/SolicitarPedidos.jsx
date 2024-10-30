@@ -3,7 +3,7 @@ import { AuthContext } from "../componentes/context/AuthContext.jsx";
 import api from "../utils/axios"; 
 import { useForm } from "react-hook-form";
 import { Layout } from "../componentes/plantilla/Layout.jsx";
-import {Input} from "@nextui-org/react";
+import { Input } from "@nextui-org/react";
 
 const useAuth = () => useContext(AuthContext);
 
@@ -28,14 +28,14 @@ export const RegistroPedido = () => {
     try {
       const pedidoData = {
         usuario: authData?.id,
-        domiciliario: data.domiciliario,
+        domiciliario: data.domiciliario,  // Domiciliario seleccionado
         direccion_recogida: data.direccionRecogida,
         direccion_entrega: data.direccionEntrega,
-        estado: "PENDIENTE", // Estado predeterminado
-        fecha_hora: new Date().toISOString(), // Fecha y hora actual
+        estado: "PENDIENTE",
+        fecha_hora: new Date().toISOString(),
       };
 
-      const response = await api.post("/pedidos", pedidoData);
+      const response = await api.post("solicitudes/", pedidoData);
       if (response) {
         alert("¡Pedido registrado exitosamente!");
       }
@@ -51,23 +51,23 @@ export const RegistroPedido = () => {
           <label htmlFor="usuario" className="block text-sm font-medium text-gray-600">
             Usuario
           </label>
-         <Input type={"text"}  />
+         <Input type={"text"} readOnly value={authData?.id || ''} /> 
         </div>
 
-        {/* Campo para seleccionar un domiciliario */}
+        {/* Selección de domiciliario */}
         <div>
           <label htmlFor="domiciliario" className="block text-sm font-medium text-gray-600">
-            Domiciliario
+            Seleccionar Domiciliario
           </label>
           <select
             id="domiciliario"
             {...register("domiciliario", { required: true })}
             className="w-full px-4 py-2 mt-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
           >
-            <option value="">Selecciona un domiciliario</option>
-            {domiciliarios.map((dom) => (
-              <option key={dom.id} value={dom.id}>
-                {dom.id}
+            <option value="">Seleccione un domiciliario</option>
+            {domiciliarios.map((domiciliario) => (
+              <option key={domiciliario.id} value={domiciliario.id}>
+                {domiciliario.nombre}
               </option>
             ))}
           </select>
