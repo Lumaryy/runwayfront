@@ -20,6 +20,7 @@ export const LoginForm = () => {
       const response = await api.post("auth/login/", data);
       if (response) {
         const token = response.data.access;
+        console.log(response.data)
         localStorage.setItem('authToken', token);
         //iniciarSesion(response.data);
         navigate('/home');

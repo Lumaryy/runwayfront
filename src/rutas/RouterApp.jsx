@@ -10,6 +10,7 @@ import { RepoteNovedades } from "../paginas/ReporteNovedades";
 import { ReportarIncidencias } from "../paginas/ReportarIncidencias";
 import {ControlUsuarios} from "../paginas/ControlUsuarios"
 import {ControlDomiciliarios} from "../paginas/ControlDomiciliarios"
+import {NovedadesIncidenciasPage} from "../paginas/NovedadesIncidencias.jsx";
 
 export const RouterApp = () => {
   return (
@@ -24,6 +25,7 @@ export const RouterApp = () => {
           <Route path="/reportarincidencia" element={<ReportarIncidencias />} />
           <Route path="/usuarios" element={<ControlUsuarios />} />
           <Route path="/Domiciliarios" element={<ControlDomiciliarios />} />
+          <Route path="/novedadesincidencias" element={<NovedadesIncidenciasPage />} />
         </Routes>
       </Suspense>
     </>

@@ -1,9 +1,12 @@
 import { Layout } from "../componentes/plantilla/Layout";
+import {ReportarIncidenciaForm} from "../componentes/formularios/ReportarIncidencia.jsx";
 
 export const ReportarIncidencias = () => {
   return (
     <>
-      <Layout>formulario para reportar Incidencias</Layout>
+      <Layout>
+          <ReportarIncidenciaForm/>
+      </Layout>
     </>
   );
 };

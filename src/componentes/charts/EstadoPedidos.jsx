@@ -21,7 +21,7 @@ export const EstadoPedidosChart = () => {
 
     const option = {
         title: {
-            text: "hola mi lulu",
+            text: "",
             left: "center",
             top: 20,
             textStyle: {

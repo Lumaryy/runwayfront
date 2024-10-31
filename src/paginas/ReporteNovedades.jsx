@@ -1,10 +1,11 @@
 import { Layout } from "../componentes/plantilla/Layout";
+import { ReportarNovedadForm } from "../componentes/formularios/ReportarNovedad";
 
 export const RepoteNovedades = () => {
   return (
     <>
       <Layout>
-        Luisa, qui debe de ir un formulario para reportar Novedades
+        <ReportarNovedadForm />
       </Layout>
     </>
   );

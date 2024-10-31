@@ -3,7 +3,7 @@ import { AuthContext } from "../componentes/context/AuthContext.jsx";
 import api from "../utils/axios"; 
 import { useForm } from "react-hook-form";
 import { Layout } from "../componentes/plantilla/Layout.jsx";
-import { Input } from "@nextui-org/react";
+
 
 const useAuth = () => useContext(AuthContext);
 
@@ -47,12 +47,7 @@ export const RegistroPedido = () => {
   return (
     <Layout> 
       <form onSubmit={handleSubmit(handlePedidoSubmit)} className="space-y-4">
-        <div>
-          <label htmlFor="usuario" className="block text-sm font-medium text-gray-600">
-            Usuario
-          </label>
-         <Input type={"text"} readOnly value={authData?.id || ''} /> 
-        </div>
+       
 
         {/* Selección de domiciliario */}
         <div>

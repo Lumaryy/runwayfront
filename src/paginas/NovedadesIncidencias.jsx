@@ -21,7 +21,7 @@ const style = {
   p: 4,
 };
 
-export const ControlDomiciliarios = () => {
+export const NovedadesIncidenciasPage = () => {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [id, setId] = useState('');
@@ -30,7 +30,7 @@ export const ControlDomiciliarios = () => {
   const [availability, setAvailability] = useState('disponible');
   const [errors, setErrors] = useState({});
   const [formState, setFormState] = useState(false);
-  const [users, setUsers] = useState([]); 
+  const [users, setUsers] = useState([]);
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => {
@@ -59,13 +59,12 @@ export const ControlDomiciliarios = () => {
     try {
       let save;
       if (!formState) {
-        // http://127.0.0.1:8000/api/solicitudes/
-        save = await api.post('domiciliarios/', dataSend);
-      } else { 
-        save = await api.put(`domiciliarios/${id}/`, dataSend);
+        save = await api.post('novedades/', dataSend);
+      } else {
+        save = await api.put(`novedades/${id}/`, dataSend);
       }
 
-      console.log('DOMICILIARIO SAVE: ', save);
+      console.log('NOVEDADES SAVE: ', save);
       await fetchData();
       handleClose();
 
@@ -93,18 +92,18 @@ export const ControlDomiciliarios = () => {
     }
   };
 
-  const handleEdit = (domiciliario) => {
-    setId(domiciliario.id);
-    setUserId(domiciliario.usuarios.id); 
-    setLicense(domiciliario.licencia_vehiculo);
-    setAvailability(domiciliario.disponibilidad);
-    setFormState(true); 
+  const handleEdit = (novedades) => {
+    setId(novedades.id);
+    setUserId(novedades.domiciliario);
+    setLicense(novedades.solicitud);
+    setAvailability(novedades.descripcion);
+    setFormState(true);
     handleOpen();
   };
 
   const fetchData = async () => {
     try {
-      const response = await api.get('domiciliarios/');
+      const response = await api.get('novedades/');
       setData(response.data);
       console.log('LIST DOMICILIARIOS: ', response.data);
     } catch (error) {
@@ -123,7 +122,7 @@ export const ControlDomiciliarios = () => {
 
   useEffect(() => {
     fetchData();
-    fetchUsers(); 
+    fetchUsers();
   }, []);
 
   const columns = [

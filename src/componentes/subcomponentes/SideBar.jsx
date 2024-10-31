@@ -34,7 +34,7 @@ export const SideBar = () => {
       submenu: [
         { title: "Reportar Novedad", path: "/reportarnovedad" },
         { title: "Reportar Incidencias", path: "/reportarincidencia" },
-        { title: "Novedades", path: "/users/roles" },
+        { title: "Novedades", path: "/novedadesincidencias" },
       ],
     },
 
